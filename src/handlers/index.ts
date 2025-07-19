@@ -9,9 +9,9 @@ const createAccount = async (req:Request, res:Response) => {
 
     if(userExist){
         const error = new Error('User already exist');
-        res.json({error: error.message});
+        return res.json({error: error.message});
+        return res.status(400).json({ error: 'User already exists' });
     }
-    return
 
     const user = new User(req.body);
     await user.save();
