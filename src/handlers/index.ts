@@ -11,7 +11,6 @@ const createAccount = async (req:Request, res:Response) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    return
 
     const {email, password} = req.body;
 
@@ -19,16 +18,14 @@ const createAccount = async (req:Request, res:Response) => {
     const userExist = await User.findOne({email});
     if(userExist){
         const error = new Error('User already exist with this email');
-        return res.json({error: error.message});
-        return res.status(409).json({ error });
+        return res.status(409).json({error: error.message});
     }
 
     const handle = slug(req.body.handle, '');
     const handleExist = await User.findOne({ handle});
     if(handleExist){
         const error = new Error('Username not available');
-        return res.json({error: error.message});
-        return res.status(409).json({ error});
+        return res.status(409).json({error: error.message});
     }
 
     const user = new User(req.body);
